@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Build output
+client/dist/
+client/.vite/
+
+# Database (local)
+server/db/*.db
+server/db/*.db-shm
+server/db/*.db-wal
+
+# Uploads (PDF fayllar - ularni alohida saqlang)
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Environment variables
+.env
+server/.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
