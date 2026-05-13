@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'DM Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer components {
+  /* ===== OLOV (FIRE) ANIMATSIYALARI ===== */
+  .fire-border {
+    position: relative;
+    overflow: hidden;
+  }
+  .fire-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(45deg, #FF4500, #FF8C00, #FFD700, #FF4500);
+    background-size: 300% 300%;
+    animation: fireGradient 2s ease infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+  @keyframes fireGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* ===== SUV (WATER) ANIMATSIYALARI ===== */
+  .wave-bg {
+    background: linear-gradient(180deg, #0A1628 0%, #1E90FF22 100%);
+  }
+
+  /* ===== SHISHA EFFEKTI ===== */
+  .glass {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .glass-dark {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* ===== SCROLLBAR USLUBI ===== */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0f0f0f;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #FF8C00;
+  }
+
+  /* ===== UMUMIY TUGMA ===== */
+  .btn-primary {
+    @apply px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 active:scale-95;
+  }
+  .btn-fire {
+    @apply bg-gradient-to-r from-fire-red to-fire-orange text-white hover:shadow-lg hover:shadow-orange-500/30;
+  }
+  .btn-water {
+    @apply bg-gradient-to-r from-water-deep to-water-blue text-white hover:shadow-lg hover:shadow-blue-500/30;
+  }
+  .btn-earth {
+    @apply bg-gradient-to-r from-earth-green to-green-600 text-white hover:shadow-lg hover:shadow-green-500/30;
+  }
+
+  /* ===== KARTA ANIMATSIYASI ===== */
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl;
+  }
+
+  /* ===== TO'LQin SVG ===== */
+  .wave-animation {
+    animation: waveMove 6s ease-in-out infinite;
+  }
+  @keyframes waveMove {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-5%); }
+  }
+
+  /* ===== OLOV PARTICLE EFFEKTI ===== */
+  .fire-particle {
+    animation: riseUp 1.5s ease-in infinite;
+    opacity: 0;
+  }
+  @keyframes riseUp {
+    0% { transform: translateY(0) scale(1); opacity: 0.8; }
+    100% { transform: translateY(-40px) scale(0); opacity: 0; }
+  }
+
+  /* ===== EARTH TEXTURE ===== */
+  .earth-texture {
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(45, 80, 22, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(139, 115, 85, 0.2) 0%, transparent 40%),
+      radial-gradient(circle at 50% 80%, rgba(45, 80, 22, 0.2) 0%, transparent 40%);
+  }
+
+  /* ===== PAGE TRANSITION ===== */
+  .page-enter {
+    animation: pageEnter 0.4s ease-out;
+  }
+  @keyframes pageEnter {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* ===== CUSTOM PARTICLE ===== */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
