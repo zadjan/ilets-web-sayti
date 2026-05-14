@@ -45,7 +45,7 @@ export default function AdminDashboard() {
         <h2 className="text-2xl font-bold text-white mb-1">
           Xush kelibsiz, Admin! 👋
         </h2>
-        <p className="text-gray-400">IELTS Hub UZ boshqaruv paneli</p>
+        <p className="text-gray-400">IELTS Way boshqaruv paneli</p>
       </div>
 
       {/* Statistika kartalar */}

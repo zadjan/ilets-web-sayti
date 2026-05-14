@@ -1,19 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const navLinks = [
-  { path: '/', label: 'Bosh sahifa', icon: '🏠' },
-  { path: '/sites', label: 'Foydali kanallar', icon: '🔥' },
-  { path: '/hacks', label: "O'rganish usullari", icon: '💧' },
-  { path: '/books', label: 'Kitoblar', icon: '🌤️' },
-  { path: '/community', label: 'Jamiyat', icon: '🌍' },
-];
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const { lang, toggleLang, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -27,6 +21,14 @@ export default function Navbar() {
 
   const isAdmin = location.pathname.startsWith('/admin');
   if (isAdmin) return null;
+
+  const navLinks = [
+    { path: '/', label: t.nav.home },
+    { path: '/sites', label: t.nav.sites },
+    { path: '/hacks', label: t.nav.hacks },
+    { path: '/books', label: t.nav.books },
+    { path: '/community', label: t.nav.community },
+  ];
 
   return (
     <motion.nav
@@ -42,54 +44,70 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
+          <Link to="/" className="flex items-center gap-2 group flex-shrink-0">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-lg font-bold text-white shadow-lg group-hover:scale-110 transition-transform">
-              I
+              W
             </div>
             <span className="text-white font-bold text-lg tracking-wide">
-              IELTS <span className="text-orange-400">Hub</span> UZ
+              IELTS <span className="text-orange-400">Way</span>
             </span>
           </Link>
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-1">
-            {navLinks.map(({ path, label, icon }) => {
+            {navLinks.map(({ path, label }) => {
               const active = location.pathname === path;
               return (
                 <Link
                   key={path}
                   to={path}
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                     active
                       ? 'bg-white/20 text-white'
                       : 'text-gray-300 hover:text-white hover:bg-white/10'
                   }`}
                 >
-                  <span className="text-base">{icon}</span>
-                  <span>{label}</span>
+                  {label}
                 </Link>
               );
             })}
           </div>
 
-          {/* Admin linki */}
-          <Link
-            to="/admin"
-            className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/10 text-white text-sm font-medium hover:bg-white/20 transition-all"
-          >
-            <span>⚙️</span> Admin
-          </Link>
-
-          {/* Mobile menu tugmasi */}
+          {/* Til almashtirish tugmasi */}
           <button
-            className="md:hidden p-2 rounded-lg text-white hover:bg-white/10 transition-all"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Menu"
+            onClick={toggleLang}
+            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/20 bg-white/5 hover:bg-white/15 transition-all duration-200 cursor-pointer select-none"
+            title={lang === 'uz' ? 'Switch to English' : "O'zbek tiliga o'tish"}
           >
-            <div className={`w-5 h-0.5 bg-white transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
-            <div className={`w-5 h-0.5 bg-white my-1 transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
-            <div className={`w-5 h-0.5 bg-white transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
+            <span className="text-base">{lang === 'uz' ? '🇺🇿' : '🇬🇧'}</span>
+            <span className="text-white text-sm font-semibold tracking-wider">
+              {lang === 'uz' ? 'UZ' : 'EN'}
+            </span>
+            <span className="text-gray-400 text-xs">
+              {lang === 'uz' ? '→ EN' : '→ UZ'}
+            </span>
           </button>
+
+          {/* Mobile: til tugmasi + burger */}
+          <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={toggleLang}
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-white/20 bg-white/5 hover:bg-white/15 transition-all text-sm"
+            >
+              <span>{lang === 'uz' ? '🇺🇿' : '🇬🇧'}</span>
+              <span className="text-white font-semibold">{lang === 'uz' ? 'UZ' : 'EN'}</span>
+            </button>
+
+            <button
+              className="p-2 rounded-lg text-white hover:bg-white/10 transition-all"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Menu"
+            >
+              <div className={`w-5 h-0.5 bg-white transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
+              <div className={`w-5 h-0.5 bg-white my-1 transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
+              <div className={`w-5 h-0.5 bg-white transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -103,26 +121,19 @@ export default function Navbar() {
             className="md:hidden bg-black/90 backdrop-blur-lg border-t border-white/10"
           >
             <div className="px-4 py-3 space-y-1">
-              {navLinks.map(({ path, label, icon }) => (
+              {navLinks.map(({ path, label }) => (
                 <Link
                   key={path}
                   to={path}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                  className={`block px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                     location.pathname === path
                       ? 'bg-white/20 text-white'
                       : 'text-gray-300 hover:text-white hover:bg-white/10'
                   }`}
                 >
-                  <span className="text-xl">{icon}</span>
                   {label}
                 </Link>
               ))}
-              <Link
-                to="/admin"
-                className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10"
-              >
-                <span className="text-xl">⚙️</span> Admin Panel
-              </Link>
             </div>
           </motion.div>
         )}

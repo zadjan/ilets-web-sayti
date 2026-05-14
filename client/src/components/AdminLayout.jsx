@@ -35,10 +35,10 @@ export default function AdminLayout({ children, title }) {
         <div className="p-6 border-b border-white/5">
           <Link to="/" className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center font-bold text-white text-lg">
-              I
+              W
             </div>
             <div>
-              <div className="text-white font-bold leading-none">IELTS Hub UZ</div>
+              <div className="text-white font-bold leading-none">IELTS Way</div>
               <div className="text-gray-500 text-xs mt-0.5">Admin Panel</div>
             </div>
           </Link>

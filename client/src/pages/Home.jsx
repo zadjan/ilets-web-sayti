@@ -1,70 +1,103 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import api from '../api/axios';
+import { useLanguage } from '../contexts/LanguageContext';
 
-const elementCards = [
+const cardStyles = [
   {
-    icon: '🔥',
-    title: 'Foydali kanallar',
-    subtitle: 'Olov',
-    description: 'Eng yaxshi YouTube va Telegram kanallar. IELTS ustalaridan to\'g\'ridan-to\'g\'ri o\'rganing.',
     path: '/sites',
+    icon: '🔥',
     gradient: 'from-red-900 via-orange-800 to-red-950',
     glow: 'shadow-orange-500/30',
     border: 'border-orange-500/40',
     tag: 'bg-orange-500/20 text-orange-300',
     btnClass: 'bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-400 hover:to-red-500',
-    stats: '50+ kanal',
   },
   {
-    icon: '💧',
-    title: "O'rganish usullari",
-    subtitle: 'Suv',
-    description: 'Shadowing, Dictation, Spaced Repetition va boshqa ilmiy asosda isbotlangan usullar.',
     path: '/hacks',
+    icon: '💧',
     gradient: 'from-blue-950 via-blue-900 to-cyan-950',
     glow: 'shadow-blue-500/30',
     border: 'border-blue-500/40',
     tag: 'bg-blue-500/20 text-blue-300',
     btnClass: 'bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500',
-    stats: '10+ usul',
   },
   {
-    icon: '🌤️',
-    title: 'Kitoblar',
-    subtitle: 'Havo',
-    description: 'Cambridge, Barron\'s va boshqa sertifikatlangan IELTS kitoblari. PDF yuklab oling.',
     path: '/books',
+    icon: '🌤️',
     gradient: 'from-sky-900 via-sky-800 to-indigo-950',
     glow: 'shadow-sky-500/30',
     border: 'border-sky-400/40',
     tag: 'bg-sky-500/20 text-sky-300',
     btnClass: 'bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500',
-    stats: '30+ kitob',
   },
   {
-    icon: '🌍',
-    title: 'Jamiyat',
-    subtitle: 'Yer',
-    description: 'Savol bering, tajriba ulashing, motivatsiya oling. Birga o\'rganamiz!',
     path: '/community',
+    icon: '🌍',
     gradient: 'from-green-950 via-emerald-900 to-stone-950',
     glow: 'shadow-green-500/30',
     border: 'border-green-500/40',
     tag: 'bg-green-500/20 text-green-300',
     btnClass: 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500',
-    stats: '1000+ a\'zo',
   },
 ];
 
-const benefits = [
-  { icon: '🆓', title: 'Bepul', desc: 'Barcha materiallar mutlaqo bepul.' },
-  { icon: '🇺🇿', title: "O'zbek tilida", desc: "Tushuntirish o'zbek tilida." },
-  { icon: '📱', title: 'Mobil qulay', desc: 'Har qanday qurilmadan foydalaning.' },
-  { icon: '🔄', title: 'Doimiy yangilanadi', desc: "Yangi materiallar qo'shiladi." },
-  { icon: '💬', title: 'Jonli yordam', desc: 'Savollaringizga javob beriladi.' },
-  { icon: '🏆', title: 'Natija', desc: 'O\'quvchilarimiz 7+ ball olmoqda.' },
+const BenefitIcons = [
+  // Bepul - dollar chizilgan
+  ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M14.5 9a3.5 2.5 0 0 0-5 0v.5a2.5 2.5 0 0 0 5 0v-.5" />
+      <line x1="9" y1="15" x2="15" y2="9" />
+      <path d="M9.5 15a3.5 2.5 0 0 0 5 0v-.5a2.5 2.5 0 0 0-5 0v.5" />
+    </svg>
+  ),
+  // Til - A harfi
+  ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 5h7M9 3v2c0 4.418-2.239 8-5 8" />
+      <path d="M11 18L7 10l-4 8" />
+      <path d="M9.2 16h-4.4" />
+      <path d="M15 15l2-4 2 4" />
+      <path d="M14 13.5h6" />
+      <path d="M13 19h8" />
+      <path d="M17 11v8" />
+    </svg>
+  ),
+  // Mobil qurilma
+  ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="7" y="2" width="10" height="20" rx="2" />
+      <circle cx="12" cy="17" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  ),
+  // Yangilanish - aylana o'q
+  ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+      <path d="M3 3v5h5" />
+      <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+      <path d="M16 16h5v5" />
+    </svg>
+  ),
+  // Chat - xabar pufagi
+  ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+      <line x1="9" y1="10" x2="15" y2="10" />
+      <line x1="9" y1="14" x2="13" y2="14" />
+    </svg>
+  ),
+  // Natija - yuqoriga o'q grafik
+  ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+      <polyline points="16 7 22 7 22 13" />
+    </svg>
+  ),
 ];
 
 const container = {
@@ -77,18 +110,37 @@ const item = {
 };
 
 export default function Home() {
+  const { t, lang } = useLanguage();
+  const [liveStats, setLiveStats] = useState(null);
+
+  useEffect(() => {
+    api.get('/stats').then(res => setLiveStats(res.data)).catch(() => {});
+  }, []);
+
+  const stats = lang === 'uz'
+    ? [
+        { num: liveStats ? `${liveStats.userCount}+` : '...', label: "O'quvchi" },
+        { num: liveStats ? `${liveStats.siteCount}+` : '...', label: 'Kanal' },
+        { num: liveStats ? `${liveStats.bookCount}+` : '...', label: 'Kitob' },
+        { num: '7+', label: "O'rtacha ball" },
+      ]
+    : [
+        { num: liveStats ? `${liveStats.userCount}+` : '...', label: 'Students' },
+        { num: liveStats ? `${liveStats.siteCount}+` : '...', label: 'Channels' },
+        { num: liveStats ? `${liveStats.bookCount}+` : '...', label: 'Books' },
+        { num: '7+', label: 'Avg. Score' },
+      ];
+
   return (
     <div className="min-h-screen bg-gray-950 text-white">
       <Navbar />
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Animatsion fon */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse" />
           <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-3xl" />
-          {/* Grid pattern */}
           <div
             className="absolute inset-0 opacity-5"
             style={{
@@ -106,7 +158,7 @@ export default function Home() {
           >
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/15 border border-orange-500/30 text-orange-300 text-sm font-medium mb-6">
               <span className="w-2 h-2 rounded-full bg-orange-400 animate-pulse" />
-              O'zbek tilida IELTS platformasi
+              {lang === 'uz' ? "O'zbek tilida IELTS platformasi" : 'IELTS Platform in Uzbek'}
             </span>
           </motion.div>
 
@@ -116,15 +168,22 @@ export default function Home() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-5xl md:text-7xl font-extrabold leading-tight mb-6"
           >
-            IELTS ni{' '}
-            <span className="bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 bg-clip-text text-transparent">
-              tez
-            </span>{' '}
-            va{' '}
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-              samarali
-            </span>{' '}
-            o'rgan
+            {lang === 'uz' ? (
+              <>
+                IELTS ni{' '}
+                <span className="bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 bg-clip-text text-transparent">tez</span>
+                {' '}va{' '}
+                <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">samarali</span>
+                {' '}o'rgan
+              </>
+            ) : (
+              <>
+                Learn IELTS{' '}
+                <span className="bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 bg-clip-text text-transparent">Fast</span>
+                {' '}&{' '}
+                <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Effectively</span>
+              </>
+            )}
           </motion.h1>
 
           <motion.p
@@ -133,8 +192,7 @@ export default function Home() {
             transition={{ duration: 0.7, delay: 0.25 }}
             className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            Foydali kanallar, ilmiy o'rganish usullari, eng yaxshi kitoblar va faol jamiyat —
-            barchasi bir joyda, o'zbek tilida.
+            {t.home.heroSub}
           </motion.p>
 
           <motion.div
@@ -147,29 +205,23 @@ export default function Home() {
               to="/sites"
               className="px-8 py-4 rounded-2xl bg-gradient-to-r from-orange-500 to-red-600 text-white font-semibold text-lg hover:from-orange-400 hover:to-red-500 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-orange-500/30 active:scale-95"
             >
-              🚀 Boshlash
+              {t.home.startBtn}
             </Link>
             <Link
               to="/community"
               className="px-8 py-4 rounded-2xl bg-white/10 backdrop-blur text-white font-semibold text-lg hover:bg-white/20 transition-all duration-300 hover:scale-105 border border-white/20"
             >
-              💬 Jamiyatga qo'shil
+              {t.home.learnMore}
             </Link>
           </motion.div>
 
-          {/* Statistika */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
             className="flex flex-wrap justify-center gap-8 mt-16"
           >
-            {[
-              { num: '1000+', label: "O'quvchi" },
-              { num: '50+', label: 'Kanal' },
-              { num: '30+', label: 'Kitob' },
-              { num: '7+', label: "O'rtacha ball" },
-            ].map(({ num, label }) => (
+            {stats.map(({ num, label }) => (
               <div key={label} className="text-center">
                 <div className="text-3xl font-extrabold text-white">{num}</div>
                 <div className="text-gray-500 text-sm mt-1">{label}</div>
@@ -178,7 +230,6 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* Pastga scroll belgisi */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
           <div className="w-6 h-9 rounded-full border-2 border-white/30 flex items-start justify-center p-1">
             <div className="w-1 h-2 bg-white/50 rounded-full animate-pulse" />
@@ -195,13 +246,16 @@ export default function Home() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
-            To'rt unsur —{' '}
-            <span className="bg-gradient-to-r from-orange-400 to-blue-400 bg-clip-text text-transparent">
-              bitta yo'l
-            </span>
+            {lang === 'uz' ? (
+              <>To'rt unsur —{' '}<span className="bg-gradient-to-r from-orange-400 to-blue-400 bg-clip-text text-transparent">bitta yo'l</span></>
+            ) : (
+              <>Four Elements —{' '}<span className="bg-gradient-to-r from-orange-400 to-blue-400 bg-clip-text text-transparent">One Path</span></>
+            )}
           </h2>
           <p className="text-gray-400 text-lg max-w-xl mx-auto">
-            IELTS ni to'liq o'zlashtirish uchun zarur bo'lgan hamma narsa shu yerda
+            {lang === 'uz'
+              ? "IELTS ni to'liq o'zlashtirish uchun zarur bo'lgan hamma narsa shu yerda"
+              : 'Everything you need to master IELTS is right here'}
           </p>
         </motion.div>
 
@@ -212,36 +266,36 @@ export default function Home() {
           viewport={{ once: true }}
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
-          {elementCards.map(({ icon, title, subtitle, description, path, gradient, glow, border, tag, btnClass, stats }) => (
-            <motion.div
-              key={path}
-              variants={item}
-              className={`relative rounded-3xl bg-gradient-to-br ${gradient} border ${border} p-8 overflow-hidden group cursor-pointer hover:-translate-y-1 transition-all duration-300 hover:shadow-2xl ${glow}`}
-            >
-              {/* Fon glow */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-white/5 rounded-3xl" />
-
-              <div className="relative z-10">
-                <div className="flex items-start justify-between mb-4">
-                  <span className="text-5xl">{icon}</span>
-                  <span className={`text-xs font-medium px-3 py-1 rounded-full ${tag}`}>
-                    {subtitle}
-                  </span>
+          {cardStyles.map(({ path, gradient, glow, border, tag, btnClass }, i) => {
+            const card = t.home.cards[i];
+            return (
+              <motion.div
+                key={path}
+                variants={item}
+                className={`relative rounded-3xl bg-gradient-to-br ${gradient} border ${border} p-8 overflow-hidden group hover:-translate-y-1 transition-all duration-300 hover:shadow-2xl ${glow}`}
+              >
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-white/5 rounded-3xl" />
+                <div className="relative z-10">
+                  <div className="flex items-start justify-between mb-4">
+                    <span className={`text-xs font-medium px-3 py-1 rounded-full ${tag}`}>
+                      {card.subtitle}
+                    </span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-2">{card.title}</h3>
+                  <p className="text-gray-300 text-sm leading-relaxed mb-6">{card.description}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-400 text-xs">{card.stats}</span>
+                    <Link
+                      to={path}
+                      className={`px-5 py-2.5 rounded-xl text-sm font-semibold text-white ${btnClass} transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg`}
+                    >
+                      {t.home.goBtn} →
+                    </Link>
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-2">{title}</h3>
-                <p className="text-gray-300 text-sm leading-relaxed mb-6">{description}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-400 text-xs">{stats}</span>
-                  <Link
-                    to={path}
-                    className={`px-5 py-2.5 rounded-xl text-sm font-semibold text-white ${btnClass} transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg`}
-                  >
-                    Ko'rish →
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </motion.div>
       </section>
 
@@ -255,12 +309,9 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-extrabold mb-4">
-              Saytdan{' '}
-              <span className="text-orange-400">nima olasiz?</span>
+              {t.home.benefitsTitle.split('?')[0]}
+              <span className="text-orange-400">?</span>
             </h2>
-            <p className="text-gray-400 text-lg">
-              IELTS Hub UZ bilan o'quvchilarimizning muvaffaqiyati kafolatlanadi
-            </p>
           </motion.div>
 
           <motion.div
@@ -270,17 +321,22 @@ export default function Home() {
             viewport={{ once: true }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            {benefits.map(({ icon, title, desc }) => (
-              <motion.div
-                key={title}
-                variants={item}
-                className="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1"
-              >
-                <span className="text-4xl mb-4 block">{icon}</span>
-                <h3 className="text-white font-semibold text-lg mb-2">{title}</h3>
-                <p className="text-gray-400 text-sm">{desc}</p>
-              </motion.div>
-            ))}
+            {t.home.benefits.map(({ title, desc }, i) => {
+              const Icon = BenefitIcons[i];
+              return (
+                <motion.div
+                  key={title}
+                  variants={item}
+                  className="group bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1"
+                >
+                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-orange-500/20 to-blue-500/20 border border-white/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:border-white/20 transition-all duration-300">
+                    <Icon className="w-5 h-5 text-orange-300 group-hover:text-white transition-colors duration-300" />
+                  </div>
+                  <h3 className="text-white font-semibold text-lg mb-2">{title}</h3>
+                  <p className="text-gray-400 text-sm">{desc}</p>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
       </section>
@@ -301,17 +357,18 @@ export default function Home() {
 
             <div className="relative z-10">
               <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
-                Bugun boshlang! 🚀
+                {lang === 'uz' ? 'Bugun boshlang!' : 'Start Today!'}
               </h2>
               <p className="text-gray-300 text-lg mb-8 max-w-xl mx-auto">
-                Har kuni 30 daqiqa. 3 oy. IELTS 7+ ball — bu sizning maqsadingiz, bizning vazifamiz.
+                {lang === 'uz'
+                  ? 'Har kuni 30 daqiqa. 3 oy. IELTS 7+ ball — bu sizning maqsadingiz, bizning vazifamiz.'
+                  : '30 minutes a day. 3 months. IELTS 7+ — your goal, our mission.'}
               </p>
               <Link
                 to="/hacks"
                 className="inline-flex items-center gap-2 px-10 py-4 rounded-2xl bg-white text-gray-900 font-bold text-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-2xl"
               >
-                O'rganishni boshlash
-                <span>→</span>
+                {lang === 'uz' ? "O'rganishni boshlash" : 'Start Learning'} →
               </Link>
             </div>
           </motion.div>

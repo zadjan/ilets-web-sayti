@@ -79,6 +79,9 @@ if (sitesCount.count === 0) {
   );
   insertSite.run('youtube', 'IELTS Lyna', 'IELTS bo\'yicha eng yaxshi YouTube kanal. Speaking, Writing, Reading va Listening bo\'limlari.', 'https://youtube.com/@ielts-lyna', 'https://i.imgur.com/placeholder1.jpg', '250K');
   insertSite.run('youtube', 'E2 IELTS', 'Avstraliyalik o\'qituvchilar tomonidan yuqori ball olish strategiyalari.', 'https://youtube.com/@E2IELTS', 'https://i.imgur.com/placeholder2.jpg', '1.2M');
+  insertSite.run('youtube', 'IELTS Advantage', 'IELTS Speaking testlari va band 7-9 uchun mo\'ljallangan to\'liq strategiyalar. Real imtihon savollariga namuna javoblar bilan.', 'https://www.youtube.com/@IELTSAdvantage', 'https://i.imgur.com/placeholder5.jpg', '290K');
+  insertSite.run('youtube', 'Luke\'s English Podcast', 'Ingliz tili o\'qituvchisi Luke Thompson tomonidan 20 ta podcast: ingliz tilini tabiiy va qiziqarli yo\'l bilan o\'rganish. Vocabulary, grammar, idiomlar — hammasi bir joyda.', 'https://www.youtube.com/@teacherluke', 'https://i.imgur.com/placeholder6.jpg', '170K');
+  insertSite.run('youtube', 'English with Lucy', '"Learn All Tenses" videolari va boshqa grammatika darslar bilan ingliz tilini professional darajada o\'rganing. IELTS Writing va Speaking uchun juda foydali.', 'https://www.youtube.com/@EnglishwithLucy', 'https://i.imgur.com/placeholder7.jpg', '12.4M');
   insertSite.run('telegram', 'IELTS O\'zbek', 'O\'zbek tilida IELTS materiallari va mashqlar.', 'https://t.me/ielts_uzbek', 'https://i.imgur.com/placeholder3.jpg', '45K');
   insertSite.run('telegram', 'IELTS Daily', 'Har kuni yangi IELTS mashqlari va vocabulary.', 'https://t.me/ieltsdaily', 'https://i.imgur.com/placeholder4.jpg', '32K');
 }

@@ -50,9 +50,9 @@ export default function AdminLogin() {
           {/* Logo */}
           <div className="text-center mb-8">
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-3xl font-bold text-white mx-auto mb-4 shadow-lg shadow-orange-500/30">
-              I
+              W
             </div>
-            <h1 className="text-white font-bold text-2xl">IELTS Hub UZ</h1>
+            <h1 className="text-white font-bold text-2xl">IELTS Way</h1>
             <p className="text-gray-400 text-sm mt-1">Admin Panel</p>
           </div>
 
