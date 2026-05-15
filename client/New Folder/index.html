@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>List Vazifa</title>
+
+  <style>
+    /* UL style */
+    ul {
+      background-color: lightblue;
+      color: black;
+      border: 3px solid blue;
+      width: 200px;
+      height: 150px;
+      list-style-type: square;
+      padding: 20px;
+    }
+
+    /* OL style */
+    ol {
+      background-color: lightgreen;
+      color: darkgreen;
+      border: 3px solid green;
+      width: 200px;
+      list-style-type: upper-roman;
+      padding: 20px;
+    }
+
+    /* DL style */
+    dl {
+      background-color: lightgray;
+      border: 3px solid black;
+      width: 250px;
+      padding: 15px;
+    }
+
+    /* DT style */
+    dt {
+      color: blue;
+      font-weight: bold;
+    }
+
+    /* Fake marker */
+    dt::before {
+      content: "🔹 ";
+    }
+
+    /* DD style */
+    dd {
+      color: gray;
+      margin-left: 20px;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <h2>Unordered List</h2>
+  <ul>
+    <li>HTML</li>
+    <li>CSS</li>
+    <li>JavaScript</li>
+    <li>React</li>
+  </ul>
+
+  <h2>Ordered List</h2>
+  <ol>
+    <li>Frontend</li>
+    <li>Backend</li>
+    <li>Fullstack</li>
+    <li>Mobile</li>
+  </ol>
+
+  <h2>Description List</h2>
+  <dl>
+    <dt>HTML</dt>
+    <dd>Web sahifa yaratish tili</dd>
+
+    <dt>CSS</dt>
+    <dd>Dizayn berish uchun ishlatiladi</dd>
+
+    <dt>JavaScript</dt>
+    <dd>Saytga harakat (interaktivlik) beradi</dd>
+  </dl>
+
+</body>
+
+</html>

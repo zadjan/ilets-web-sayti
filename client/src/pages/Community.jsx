@@ -226,6 +226,81 @@ export default function Community() {
         </motion.div>
       </section>
 
+      {/* Telegram */}
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <motion.h2
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          className="text-2xl font-bold font-lora text-green-300 mb-4 text-center"
+        >
+          {lang === 'uz' ? "Telegram orqali qo'shiling" : 'Join us on Telegram'}
+        </motion.h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Kanal */}
+          <motion.a
+            href="https://t.me/IELTSway_channel"
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center gap-4 p-5 rounded-2xl border border-blue-800/40 hover:border-blue-500/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-900/20 group"
+            style={{ background: 'linear-gradient(135deg, #0d1f3c 0%, #0f1a0a 100%)' }}
+          >
+            <div className="w-12 h-12 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+              <svg className="w-6 h-6 text-blue-400" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+              </svg>
+            </div>
+            <div className="min-w-0">
+              <div className="text-blue-300 text-xs font-medium mb-0.5">
+                {lang === 'uz' ? 'Rasmiy kanal' : 'Official Channel'}
+              </div>
+              <div className="text-white font-semibold truncate">@IELTSway_channel</div>
+              <div className="text-stone-500 text-xs mt-0.5">
+                {lang === 'uz' ? 'Yangiliklar va materiallar' : 'News & materials'}
+              </div>
+            </div>
+            <svg className="w-4 h-4 text-stone-600 group-hover:text-blue-400 transition-colors ml-auto flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </motion.a>
+
+          {/* Guruh */}
+          <motion.a
+            href="https://t.me/ieltsway_tm"
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+            className="flex items-center gap-4 p-5 rounded-2xl border border-green-800/40 hover:border-green-500/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-900/20 group"
+            style={{ background: 'linear-gradient(135deg, #1a2e0f 0%, #0f1a0a 100%)' }}
+          >
+            <div className="w-12 h-12 rounded-xl bg-green-600/20 border border-green-500/30 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+              <svg className="w-6 h-6 text-green-400" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+              </svg>
+            </div>
+            <div className="min-w-0">
+              <div className="text-green-400/80 text-xs font-medium mb-0.5">
+                {lang === 'uz' ? 'Muhokama guruhi' : 'Discussion Group'}
+              </div>
+              <div className="text-white font-semibold truncate">@ieltsway_tm</div>
+              <div className="text-stone-500 text-xs mt-0.5">
+                {lang === 'uz' ? 'Savol va muhokamalar' : 'Questions & discussions'}
+              </div>
+            </div>
+            <svg className="w-4 h-4 text-stone-600 group-hover:text-green-400 transition-colors ml-auto flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </motion.a>
+        </div>
+      </section>
+
       {/* Motivatsion Postlar */}
       {posts.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
