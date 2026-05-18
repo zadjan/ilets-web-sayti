@@ -6,10 +6,130 @@ import Footer from '../components/Footer';
 import api from '../api/axios';
 import { useLanguage } from '../contexts/LanguageContext';
 
+// ─── 4 ta unsur effekti ───────────────────────────────────────────
+
+// Olov (Foydali kanallar)
+function FireQuadrant() {
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {[...Array(12)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute rounded-full"
+          style={{
+            left: `${6 + i * 8}%`,
+            bottom: `${4 + (i % 4) * 14}%`,
+            width: `${3 + (i % 3) * 2}px`,
+            height: `${3 + (i % 3) * 2}px`,
+            background: i % 2 === 0 ? '#FF4500' : '#FF8C00',
+            opacity: 0.55,
+            animation: `riseUp ${1.1 + (i % 3) * 0.45}s ease-in ${i * 0.16}s infinite`,
+          }}
+        />
+      ))}
+      <div className="absolute bottom-0 left-0 right-0 h-1/2"
+        style={{ background: 'linear-gradient(to top, rgba(239,68,68,0.08), transparent)' }} />
+      <div className="absolute top-5 left-5 text-orange-500/12 font-extrabold select-none"
+        style={{ fontSize: 96, lineHeight: 1, fontFamily: 'serif' }}>炎</div>
+    </div>
+  );
+}
+
+// Suv (O'rganish usullari)
+function WaterQuadrant() {
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {[...Array(8)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute rounded-full border border-blue-400/25"
+          style={{
+            right: `${4 + i * 11}%`,
+            bottom: `${12 + (i % 3) * 18}%`,
+            width: `${16 + i * 11}px`,
+            height: `${16 + i * 11}px`,
+            animation: `wave ${2.4 + i * 0.45}s ease-in-out ${i * 0.3}s infinite`,
+          }}
+        />
+      ))}
+      <div className="absolute top-0 right-0 w-40 h-40 bg-cyan-600/8 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-0 left-0 h-1/2"
+        style={{ background: 'linear-gradient(to top, rgba(6,182,212,0.07), transparent)' }} />
+      <div className="absolute top-5 right-5 text-blue-500/10 font-extrabold select-none"
+        style={{ fontSize: 96, lineHeight: 1, fontFamily: 'serif' }}>水</div>
+    </div>
+  );
+}
+
+// Havo / Shamol (Kitoblar)
+function WindQuadrant() {
+  const streaks = [
+    { top: '12%', left: '2%',  w: 70,  dur: 2.2, delay: 0    },
+    { top: '26%', left: '15%', w: 95,  dur: 2.6, delay: 0.5  },
+    { top: '40%', left: '0%',  w: 55,  dur: 2.0, delay: 0.2  },
+    { top: '55%', left: '20%', w: 80,  dur: 2.8, delay: 0.8  },
+    { top: '68%', left: '5%',  w: 110, dur: 2.4, delay: 0.35 },
+    { top: '80%', left: '12%', w: 65,  dur: 2.1, delay: 0.6  },
+    { top: '90%', left: '0%',  w: 90,  dur: 2.5, delay: 0.15 },
+  ];
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {streaks.map((s, i) => (
+        <div
+          key={i}
+          style={{
+            position: 'absolute',
+            top: s.top,
+            left: s.left,
+            width: `${s.w}px`,
+            height: '1.5px',
+            borderRadius: '4px',
+            background: `linear-gradient(90deg, transparent, rgba(147,210,250,${0.14 + (i % 3) * 0.06}), transparent)`,
+            animation: `windFlow ${s.dur}s ease-in-out ${s.delay}s infinite`,
+          }}
+        />
+      ))}
+      <div className="absolute bottom-0 left-0 right-0 h-1/2"
+        style={{ background: 'linear-gradient(to top, rgba(99,102,241,0.07), transparent)' }} />
+      <div className="absolute top-5 left-5 text-sky-500/10 font-extrabold select-none"
+        style={{ fontSize: 96, lineHeight: 1, fontFamily: 'serif' }}>風</div>
+    </div>
+  );
+}
+
+// Yer (Jamiyat)
+function EarthQuadrant() {
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {[...Array(10)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute rounded-full"
+          style={{
+            right: `${6 + i * 9}%`,
+            bottom: `${6 + (i % 4) * 12}%`,
+            width: `${3 + (i % 3) * 2}px`,
+            height: `${3 + (i % 3) * 2}px`,
+            background: i % 2 === 0 ? '#4ade80' : '#34d399',
+            opacity: 0.35,
+            animation: `riseUp ${1.8 + (i % 3) * 0.55}s ease-in ${i * 0.22}s infinite`,
+          }}
+        />
+      ))}
+      <div className="absolute top-0 right-0 w-36 h-36 bg-green-700/8 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 right-0 h-1/2"
+        style={{ background: 'linear-gradient(to top, rgba(34,197,94,0.07), transparent)' }} />
+      <div className="absolute top-5 right-5 text-green-500/10 font-extrabold select-none"
+        style={{ fontSize: 96, lineHeight: 1, fontFamily: 'serif' }}>土</div>
+    </div>
+  );
+}
+
+// ─── Kartalar va benefitlar ───────────────────────────────────────
+
 const cardStyles = [
   {
     path: '/sites',
-    icon: '🔥',
     gradient: 'from-red-900 via-orange-800 to-red-950',
     glow: 'shadow-orange-500/30',
     border: 'border-orange-500/40',
@@ -18,7 +138,6 @@ const cardStyles = [
   },
   {
     path: '/hacks',
-    icon: '💧',
     gradient: 'from-blue-950 via-blue-900 to-cyan-950',
     glow: 'shadow-blue-500/30',
     border: 'border-blue-500/40',
@@ -27,7 +146,6 @@ const cardStyles = [
   },
   {
     path: '/books',
-    icon: '🌤️',
     gradient: 'from-sky-900 via-sky-800 to-indigo-950',
     glow: 'shadow-sky-500/30',
     border: 'border-sky-400/40',
@@ -36,7 +154,6 @@ const cardStyles = [
   },
   {
     path: '/community',
-    icon: '🌍',
     gradient: 'from-green-950 via-emerald-900 to-stone-950',
     glow: 'shadow-green-500/30',
     border: 'border-green-500/40',
@@ -46,7 +163,6 @@ const cardStyles = [
 ];
 
 const BenefitIcons = [
-  // Bepul - dollar chizilgan
   ({ className }) => (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="10" />
@@ -55,26 +171,20 @@ const BenefitIcons = [
       <path d="M9.5 15a3.5 2.5 0 0 0 5 0v-.5a2.5 2.5 0 0 0-5 0v.5" />
     </svg>
   ),
-  // Til - A harfi
   ({ className }) => (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <path d="M4 5h7M9 3v2c0 4.418-2.239 8-5 8" />
-      <path d="M11 18L7 10l-4 8" />
-      <path d="M9.2 16h-4.4" />
-      <path d="M15 15l2-4 2 4" />
-      <path d="M14 13.5h6" />
-      <path d="M13 19h8" />
-      <path d="M17 11v8" />
+      <path d="M11 18L7 10l-4 8" /><path d="M9.2 16h-4.4" />
+      <path d="M15 15l2-4 2 4" /><path d="M14 13.5h6" />
+      <path d="M13 19h8" /><path d="M17 11v8" />
     </svg>
   ),
-  // Mobil qurilma
   ({ className }) => (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <rect x="7" y="2" width="10" height="20" rx="2" />
       <circle cx="12" cy="17" r="1" fill="currentColor" stroke="none" />
     </svg>
   ),
-  // Yangilanish - aylana o'q
   ({ className }) => (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
@@ -83,15 +193,12 @@ const BenefitIcons = [
       <path d="M16 16h5v5" />
     </svg>
   ),
-  // Chat - xabar pufagi
   ({ className }) => (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-      <line x1="9" y1="10" x2="15" y2="10" />
-      <line x1="9" y1="14" x2="13" y2="14" />
+      <line x1="9" y1="10" x2="15" y2="10" /><line x1="9" y1="14" x2="13" y2="14" />
     </svg>
   ),
-  // Natija - yuqoriga o'q grafik
   ({ className }) => (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
@@ -102,12 +209,14 @@ const BenefitIcons = [
 
 const container = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.15 } },
+  show:   { opacity: 1, transition: { staggerChildren: 0.15 } },
 };
 const item = {
   hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
+
+// ─── Bosh komponent ───────────────────────────────────────────────
 
 export default function Home() {
   const { t, lang } = useLanguage();
@@ -133,23 +242,82 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-950 text-white">
+      <style>{`
+        @keyframes riseUp {
+          0%   { transform: translateY(0)   scale(1);   opacity: 0.6; }
+          80%  { opacity: 0.4; }
+          100% { transform: translateY(-60px) scale(0.5); opacity: 0; }
+        }
+        @keyframes wave {
+          0%, 100% { transform: scale(1);   opacity: 0.6; }
+          50%       { transform: scale(1.4); opacity: 0;   }
+        }
+        @keyframes windFlow {
+          0%   { transform: translateX(-40px) scaleX(0.5); opacity: 0; }
+          35%  { opacity: 1; }
+          100% { transform: translateX(90px)  scaleX(1.3); opacity: 0; }
+        }
+      `}</style>
+
       <Navbar />
 
-      {/* Hero Section */}
+      {/* ── Hero: 4 ta unsur orqa fon ─────────────────────────── */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-3xl" />
-          <div
-            className="absolute inset-0 opacity-5"
-            style={{
-              backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
-              backgroundSize: '60px 60px',
-            }}
-          />
+
+        {/* 4 kvadrant */}
+        <div className="absolute inset-0">
+
+          {/* Yuqori-chap: OLOV */}
+          <div className="absolute top-0 left-0 w-1/2 h-1/2 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-red-950 via-orange-950/90 to-gray-950/0" />
+            <FireQuadrant />
+          </div>
+
+          {/* Yuqori-o'ng: SUV */}
+          <div className="absolute top-0 right-0 w-1/2 h-1/2 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-bl from-blue-950 via-cyan-950/90 to-gray-950/0" />
+            <WaterQuadrant />
+          </div>
+
+          {/* Pastki-chap: HAVO */}
+          <div className="absolute bottom-0 left-0 w-1/2 h-1/2 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-tr from-indigo-950 via-sky-950/90 to-gray-950/0" />
+            <WindQuadrant />
+          </div>
+
+          {/* Pastki-o'ng: YER */}
+          <div className="absolute bottom-0 right-0 w-1/2 h-1/2 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-tl from-green-950 via-stone-950/90 to-gray-950/0" />
+            <EarthQuadrant />
+          </div>
+
+          {/* Markaziy qorong'i oval — matn o'qilishi uchun */}
+          <div className="absolute inset-0" style={{
+            background: 'radial-gradient(ellipse 55% 60% at 50% 50%, rgba(3,7,18,0.92) 10%, rgba(3,7,18,0.72) 45%, rgba(3,7,18,0.2) 70%, transparent 85%)',
+          }} />
+
+          {/* Bo'linish chiziqlari */}
+          <div className="absolute inset-y-0 left-1/2 -translate-x-px w-px"
+            style={{ background: 'linear-gradient(to bottom, transparent 5%, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.06) 70%, transparent 95%)' }} />
+          <div className="absolute inset-x-0 top-1/2 -translate-y-px h-px"
+            style={{ background: 'linear-gradient(to right, transparent 5%, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.06) 70%, transparent 95%)' }} />
+
+          {/* Burchak yorliqlari */}
+          <div className="absolute top-20 left-6 text-orange-400/35 text-xs font-bold tracking-widest uppercase select-none">
+            {lang === 'uz' ? 'Olov' : 'Fire'}
+          </div>
+          <div className="absolute top-20 right-6 text-blue-400/35 text-xs font-bold tracking-widest uppercase select-none">
+            {lang === 'uz' ? 'Suv' : 'Water'}
+          </div>
+          <div className="absolute bottom-28 left-6 text-sky-400/35 text-xs font-bold tracking-widest uppercase select-none">
+            {lang === 'uz' ? 'Havo' : 'Air'}
+          </div>
+          <div className="absolute bottom-28 right-6 text-green-400/35 text-xs font-bold tracking-widest uppercase select-none">
+            {lang === 'uz' ? 'Yer' : 'Earth'}
+          </div>
         </div>
 
+        {/* Asosiy kontent */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -174,7 +342,7 @@ export default function Home() {
                 <span className="bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 bg-clip-text text-transparent">tez</span>
                 {' '}va{' '}
                 <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">samarali</span>
-                {' '}o'rgan
+                {" o'rgan"}
               </>
             ) : (
               <>
@@ -215,6 +383,7 @@ export default function Home() {
             </Link>
           </motion.div>
 
+          {/* Jonli statistika */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -230,6 +399,7 @@ export default function Home() {
           </motion.div>
         </div>
 
+        {/* Pastga o'q */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
           <div className="w-6 h-9 rounded-full border-2 border-white/30 flex items-start justify-center p-1">
             <div className="w-1 h-2 bg-white/50 rounded-full animate-pulse" />
@@ -237,7 +407,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4 Ta Element Kartalar */}
+      {/* ── 4 Ta Element Kartalar ─────────────────────────────── */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -299,7 +469,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Saytdan nima olasiz */}
+      {/* ── Saytdan nima olasiz ──────────────────────────────── */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-900/50">
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -341,7 +511,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* ── CTA ──────────────────────────────────────────────── */}
       <section className="py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <motion.div

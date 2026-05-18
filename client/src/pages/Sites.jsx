@@ -44,11 +44,19 @@ function FireParticles() {
 // Video karta
 function VideoCard({ site }) {
   const videoId = getVideoId(site.link);
-  const thumb = videoId
-    ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
-    : null;
+  const [thumbSrc, setThumbSrc] = useState(
+    videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : null
+  );
+  const [thumbFailed, setThumbFailed] = useState(false);
 
-  // Kanal nomini tavsifdan ajratish (masalan "English with Lucy — ...")
+  const handleThumbError = () => {
+    if (!thumbFailed && videoId && thumbSrc?.includes('maxresdefault')) {
+      // maxresdefault yo'q bo'lsa hqdefault ga tush
+      setThumbSrc(`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`);
+      setThumbFailed(true);
+    }
+  };
+
   const [channel, ...titleParts] = site.name.split(' — ');
   const videoTitle = titleParts.join(' — ') || site.name;
   const hasChannelPrefix = titleParts.length > 0;
@@ -63,16 +71,16 @@ function VideoCard({ site }) {
       className="group rounded-2xl overflow-hidden bg-gray-900 border border-white/10 hover:border-orange-500/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-500/10"
     >
       {/* Thumbnail */}
-      <div className="relative h-48 overflow-hidden bg-gray-800">
-        {thumb ? (
+      <div className="relative h-48 overflow-hidden">
+        {/* Har doim gradient fonni ko'rsatib turadi */}
+        <div className="absolute inset-0 bg-gradient-to-br from-red-950 via-orange-950 to-gray-900" />
+        {thumbSrc && (
           <img
-            src={thumb}
+            src={thumbSrc}
             alt={videoTitle}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            onError={(e) => { e.target.style.display = 'none'; }}
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            onError={handleThumbError}
           />
-        ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-red-900/60 to-orange-900/60" />
         )}
         {/* Play button overlay */}
         <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors duration-300">
