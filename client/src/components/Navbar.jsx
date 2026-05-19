@@ -45,9 +45,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group flex-shrink-0">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-lg font-bold text-white shadow-lg group-hover:scale-110 transition-transform">
-              W
-            </div>
+            <img src="/logo.svg" className="h-9 w-auto group-hover:scale-110 transition-transform" alt="IELTS Way" />
             <span className="text-white font-bold text-lg tracking-wide">
               IELTS <span className="text-orange-400">Way</span>
             </span>

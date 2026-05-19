@@ -5,7 +5,13 @@
       "Bash(node -e \"require\\('./index.js'\\)\")",
       "Bash(curl -s http://localhost:5000/api/stats)",
       "Bash(python3 -m json.tool)",
-      "Bash(kill %1)"
+      "Bash(kill %1)",
+      "Bash(find /home/ozodbek -name \"muhlisa*\" -o -name \"*logo*\" 2>/dev/null | grep -v \".claude\")",
+      "Read(//home/ozodbek/**)",
+      "Bash(cp \"/home/ozodbek/Music/muhlisa-sayti-uchun.svg\" /home/ozodbek/Desktop/ilest-sayti/client/public/logo.svg && echo \"Copied successfully\")"
+    ],
+    "additionalDirectories": [
+      "/home/ozodbek/Music"
     ]
   }
 }

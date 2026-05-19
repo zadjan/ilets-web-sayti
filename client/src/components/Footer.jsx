@@ -20,9 +20,7 @@ export default function Footer() {
           {/* Logo va tavsif */}
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-xl font-bold text-white">
-                W
-              </div>
+              <img src="/logo.svg" className="h-10 w-auto" alt="IELTS Way" />
               <span className="text-white font-bold text-xl">
                 IELTS <span className="text-orange-400">Way</span>
               </span>
