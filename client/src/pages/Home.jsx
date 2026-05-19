@@ -29,8 +29,6 @@ function FireQuadrant() {
       ))}
       <div className="absolute bottom-0 left-0 right-0 h-1/2"
         style={{ background: 'linear-gradient(to top, rgba(239,68,68,0.08), transparent)' }} />
-      <div className="absolute top-5 left-5 text-orange-500/12 font-extrabold select-none"
-        style={{ fontSize: 96, lineHeight: 1, fontFamily: 'serif' }}>炎</div>
     </div>
   );
 }
@@ -55,8 +53,6 @@ function WaterQuadrant() {
       <div className="absolute top-0 right-0 w-40 h-40 bg-cyan-600/8 rounded-full blur-3xl" />
       <div className="absolute bottom-0 right-0 left-0 h-1/2"
         style={{ background: 'linear-gradient(to top, rgba(6,182,212,0.07), transparent)' }} />
-      <div className="absolute top-5 right-5 text-blue-500/10 font-extrabold select-none"
-        style={{ fontSize: 96, lineHeight: 1, fontFamily: 'serif' }}>水</div>
     </div>
   );
 }
@@ -91,8 +87,6 @@ function WindQuadrant() {
       ))}
       <div className="absolute bottom-0 left-0 right-0 h-1/2"
         style={{ background: 'linear-gradient(to top, rgba(99,102,241,0.07), transparent)' }} />
-      <div className="absolute top-5 left-5 text-sky-500/10 font-extrabold select-none"
-        style={{ fontSize: 96, lineHeight: 1, fontFamily: 'serif' }}>風</div>
     </div>
   );
 }
@@ -119,8 +113,6 @@ function EarthQuadrant() {
       <div className="absolute top-0 right-0 w-36 h-36 bg-green-700/8 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 right-0 h-1/2"
         style={{ background: 'linear-gradient(to top, rgba(34,197,94,0.07), transparent)' }} />
-      <div className="absolute top-5 right-5 text-green-500/10 font-extrabold select-none"
-        style={{ fontSize: 96, lineHeight: 1, fontFamily: 'serif' }}>土</div>
     </div>
   );
 }
@@ -302,19 +294,6 @@ export default function Home() {
           <div className="absolute inset-x-0 top-1/2 -translate-y-px h-px"
             style={{ background: 'linear-gradient(to right, transparent 5%, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.06) 70%, transparent 95%)' }} />
 
-          {/* Burchak yorliqlari */}
-          <div className="absolute top-20 left-6 text-orange-400/35 text-xs font-bold tracking-widest uppercase select-none">
-            {lang === 'uz' ? 'Olov' : 'Fire'}
-          </div>
-          <div className="absolute top-20 right-6 text-blue-400/35 text-xs font-bold tracking-widest uppercase select-none">
-            {lang === 'uz' ? 'Suv' : 'Water'}
-          </div>
-          <div className="absolute bottom-28 left-6 text-sky-400/35 text-xs font-bold tracking-widest uppercase select-none">
-            {lang === 'uz' ? 'Havo' : 'Air'}
-          </div>
-          <div className="absolute bottom-28 right-6 text-green-400/35 text-xs font-bold tracking-widest uppercase select-none">
-            {lang === 'uz' ? 'Yer' : 'Earth'}
-          </div>
         </div>
 
         {/* Asosiy kontent */}

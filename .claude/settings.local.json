@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(node -e \"require\\('./db/database'\\); console.log\\('DB OK'\\)\")"
+      "Bash(node -e \"require\\('./db/database'\\); console.log\\('DB OK'\\)\")",
+      "Bash(node -e \"require\\('./index.js'\\)\")",
+      "Bash(curl -s http://localhost:5000/api/stats)",
+      "Bash(python3 -m json.tool)",
+      "Bash(kill %1)"
     ]
   }
 }

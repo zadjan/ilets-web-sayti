@@ -69,6 +69,15 @@ db.exec(`
     rating INTEGER DEFAULT 5,
     created_at TEXT DEFAULT (datetime('now'))
   );
+
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    goal_score TEXT,
+    current_level TEXT,
+    created_at TEXT DEFAULT (datetime('now'))
+  );
 `);
 
 // Namuna ma'lumotlar (faqat bo'sh bo'lsa)
@@ -150,8 +159,8 @@ if (postsCount.count === 0) {
 const testimonialsCount = db.prepare('SELECT COUNT(*) as count FROM testimonials').get();
 if (testimonialsCount.count === 0) {
   const insertTestimonial = db.prepare('INSERT INTO testimonials (name, text, rating) VALUES (?, ?, ?)');
-  insertTestimonial.run('Aziz T.', 'IELTS Hub UZ orqali 3 oy ichida 7.5 ball oldim! Bu saytdagi usullar va kitoblar juda foydali bo\'ldi.', 5);
-  insertTestimonial.run('Malika R.', 'Shadowing texnikasini o\'rgangach, Speaking bo\'limida 8 ball oldim. Rahmat IELTS Hub UZ!', 5);
+  insertTestimonial.run('Aziz T.', 'IELTS Way orqali 3 oy ichida 7.5 ball oldim! Bu saytdagi usullar va kitoblar juda foydali bo\'ldi.', 5);
+  insertTestimonial.run('Malika R.', 'Shadowing texnikasini o\'rgangach, Speaking bo\'limida 8 ball oldim. Rahmat IELTS Way!', 5);
   insertTestimonial.run('Jasur K.', 'Admin doim savollarimga javob beradi. Jamiyat juda yaxshi!', 4);
 }
 
