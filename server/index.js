@@ -34,6 +34,13 @@ app.use(cors({
     else cb(new Error('CORS: ruxsat etilmagan manba.'));
   },
   credentials: true,
+	app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://ilets-web-sayti-dt3y.vercel.app',
+    'https://ilets-web-sayti.vercel.app'
+  ],
+  credentials: true
 }));
 
 // ── Body parsing (1 MB cheklov) ───────────────────────────────────
