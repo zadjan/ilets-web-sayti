@@ -15,6 +15,8 @@ import AdminHacks from './pages/admin/AdminHacks';
 import AdminBooks from './pages/admin/AdminBooks';
 import AdminCommunity from './pages/admin/AdminCommunity';
 
+// bu yerga men ozgartirish kiritmoqchiman 
+
 export default function App() {
   return (
     <AuthProvider>
